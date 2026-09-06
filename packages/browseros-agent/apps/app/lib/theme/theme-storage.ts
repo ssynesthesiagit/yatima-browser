@@ -9,5 +9,5 @@ export type Theme = 'light' | 'dark' | 'system'
  * @public
  */
 export const themeStorage = storage.defineItem<Theme>('local:theme', {
-  fallback: 'system',
+  fallback: 'dark',
 })

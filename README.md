@@ -1,3 +1,11 @@
+# Yatima Browser
+
+An independently launched BrowserOS fork with the Yatima harness palette and a local agent-control bridge. It remains a separate browser application; there is no fourth Command Center mode.
+
+See [Yatima setup and customization](yatima/README.md). The current Linux installation layers the fork's theme on the official BrowserOS 148.0.7966.97 binary; it is not a rebuilt Chromium distribution. Original BrowserOS attribution and the AGPL-3.0 license are preserved below.
+
+---
+
 <div align="center">
 <img width="693" height="415" alt="github-banner" src="https://github.com/user-attachments/assets/8129f9c8-e8f4-4afe-834a-91397121d833" />
 

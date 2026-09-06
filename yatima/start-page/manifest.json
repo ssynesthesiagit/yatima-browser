@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Yatima Start Page",
+  "version": "0.1.0",
+  "description": "A quiet local new-tab start page for Yatima Browser.",
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

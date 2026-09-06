@@ -1,0 +1,2 @@
+# Verified with the installed Prime Python 3.11 kernel.
+mcp==1.29.1

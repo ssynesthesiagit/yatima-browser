@@ -26,11 +26,13 @@ export function ThemeProvider({
   defaultTheme,
   ...props
 }: ThemeProviderProps) {
-  const [theme, setThemeState] = useState<Theme | undefined>(defaultTheme)
+  const [theme, setThemeState] = useState<Theme | undefined>(
+    defaultTheme ?? 'dark',
+  )
 
   useEffect(() => {
     themeStorage.getValue().then((savedTheme) => {
-      setThemeState(savedTheme ?? 'system')
+      setThemeState(savedTheme ?? defaultTheme ?? 'dark')
     })
 
     const unwatch = themeStorage.watch((newTheme) => {
@@ -40,7 +42,7 @@ export function ThemeProvider({
     })
 
     return () => unwatch()
-  }, [])
+  }, [defaultTheme])
 
   useEffect(() => {
     if (!theme) return

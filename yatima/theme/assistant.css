@@ -1,0 +1,38 @@
+/* Shared Yatima dark tokens for the BrowserOS Assistant UI and native overlays. */
+.dark {
+  color-scheme: dark;
+  --background: #030705;
+  --foreground: #e7f5ee;
+  --card: #08110d;
+  --card-foreground: #e7f5ee;
+  --popover: #08110d;
+  --popover-foreground: #e7f5ee;
+  --primary: #b7ff00;
+  --primary-foreground: #030705;
+  --secondary: #0b1712;
+  --secondary-foreground: #e7f5ee;
+  --muted: #0b1712;
+  --muted-foreground: #86a496;
+  --accent: #0b1712;
+  --accent-foreground: #e7f5ee;
+  --destructive: #ff677d;
+  --destructive-foreground: #030705;
+  --border: #1d372d;
+  --input: #1d372d;
+  --ring: #4df4d0;
+  --chart-1: #b7ff00;
+  --chart-2: #4df4d0;
+  --chart-3: #ffc65c;
+  --chart-4: #ff677d;
+  --chart-5: #86a496;
+  --sidebar: #08110d;
+  --sidebar-foreground: #e7f5ee;
+  --sidebar-primary: #b7ff00;
+  --sidebar-primary-foreground: #030705;
+  --sidebar-accent: #0b1712;
+  --sidebar-accent-foreground: #e7f5ee;
+  --sidebar-border: #1d372d;
+  --sidebar-ring: #4df4d0;
+  --accent-orange: #b7ff00;
+  --accent-orange-bright: #4df4d0;
+}

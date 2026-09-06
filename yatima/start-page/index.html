@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#030705" />
+    <title>Yatima</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="masthead">
+        <a class="wordmark" href="./" aria-label="Yatima start page">
+          <svg class="wordmark-mark" viewBox="0 0 32 32" aria-hidden="true">
+            <path d="m16 3 11 6.25v13.5L16 29 5 22.75V9.25L16 3Z" />
+            <path d="m5 9.25 11 6.5 11-6.5M16 15.75V29" />
+          </svg>
+          <span>YATIMA</span>
+        </a>
+        <span class="masthead-label">BROWSER / START</span>
+      </header>
+
+      <section class="hero" aria-labelledby="page-title">
+        <div class="cube-wrap" aria-hidden="true">
+          <svg class="cube" viewBox="0 0 160 160">
+            <path class="cube-top" d="m80 16 56 32-56 32-56-32 56-32Z" />
+            <path class="cube-left" d="m24 48 56 32v64l-56-32V48Z" />
+            <path class="cube-right" d="m136 48-56 32v64l56-32V48Z" />
+            <path class="cube-line" d="m80 80 56-32M80 80 24 48M80 80v64" />
+          </svg>
+        </div>
+        <p class="eyebrow">A SMALL PLACE TO BEGIN</p>
+        <h1 id="page-title">Begin somewhere <span>quiet.</span></h1>
+        <p class="lede">Search the web or enter a destination.</p>
+
+        <form id="address-form" class="address-form" role="search">
+          <label class="sr-only" for="address">Search or enter a web address</label>
+          <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="10.8" cy="10.8" r="6.8" />
+            <path d="m16 16 5 5" />
+          </svg>
+          <input
+            id="address"
+            name="address"
+            type="text"
+            inputmode="search"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            placeholder="Search or enter an address"
+            aria-describedby="address-hint"
+            autofocus
+          />
+          <button type="submit" aria-label="Go to address">GO</button>
+        </form>
+        <p id="address-hint" class="hint" role="status" aria-live="polite">
+          Press Enter to continue.
+        </p>
+      </section>
+
+      <footer class="footer">
+        <span>YATIMA</span>
+        <span class="footer-rule" aria-hidden="true"></span>
+        <span>LOCAL START PAGE</span>
+      </footer>
+    </main>
+    <script src="./newtab.js" defer></script>
+  </body>
+</html>
