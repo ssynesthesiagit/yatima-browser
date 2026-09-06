@@ -23,6 +23,7 @@ body {
 
 body {
   min-height: 100vh;
+  isolation: isolate;
   margin: 0;
   overflow-x: hidden;
   background: var(--bg);
@@ -60,7 +61,38 @@ body::after {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  isolation: isolate;
   padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1.25rem, 5vw, 5rem) 1.5rem;
+  position: relative;
+}
+
+.shell::before {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 0;
+  height: 13rem;
+  background-image:
+    linear-gradient(
+      140deg,
+      transparent 0 73%,
+      rgb(183 255 0 / 0.1) 73% calc(73% + 1px),
+      transparent calc(73% + 1px)
+    ),
+    linear-gradient(
+      90deg,
+      transparent 0 17%,
+      rgb(77 244 208 / 0.1) 17% calc(17% + 1px),
+      transparent calc(17% + 1px)
+    ),
+    radial-gradient(circle at 17% 100%, var(--cyan) 0 1px, transparent 2px);
+  content: "";
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.shell > * {
+  position: relative;
+  z-index: 1;
 }
 
 .masthead,
@@ -82,7 +114,12 @@ body::after {
   font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.24em;
+  transition: color 160ms ease;
   text-decoration: none;
+}
+
+.wordmark:hover {
+  color: var(--lime);
 }
 
 .wordmark-mark {
@@ -120,7 +157,13 @@ body::after {
   border: 1px solid var(--line);
   background: rgb(8 17 13 / 0.72);
   box-shadow: 0 1.5rem 4rem var(--shadow);
+  transition: border-color 160ms ease, transform 160ms ease;
   transform: rotate(2deg);
+}
+
+.cube-wrap:hover {
+  border-color: var(--cyan);
+  transform: rotate(1deg) translateY(-1px);
 }
 
 .cube {
@@ -204,6 +247,10 @@ h1 span {
   box-shadow: 0 0 0 3px rgb(77 244 208 / 0.1), 0 1.5rem 3rem var(--shadow);
 }
 
+.address-form:hover:not(:focus-within) {
+  border-color: var(--muted);
+}
+
 .search-icon {
   width: 1.15rem;
   height: 1.15rem;
@@ -230,6 +277,11 @@ input::placeholder {
   opacity: 0.9;
 }
 
+input:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
 button {
   min-width: 3.7rem;
   border: 1px solid var(--lime);
@@ -247,6 +299,7 @@ button {
 button:hover,
 button:focus-visible {
   background: var(--cyan);
+  box-shadow: 0 0 0 3px rgb(77 244 208 / 0.08);
 }
 
 button:active {
@@ -308,10 +361,31 @@ button:focus-visible,
   }
 }
 
+@media (max-width: 28rem) {
+  .shell {
+    padding-inline: 1rem;
+  }
+
+  .hero {
+    padding-bottom: 3.5rem;
+  }
+
+  .address-form {
+    gap: 0.5rem;
+    padding-left: 0.75rem;
+  }
+
+  button {
+    min-width: 3.35rem;
+    padding-inline: 0.65rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
+    animation-duration: 0.01ms !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }

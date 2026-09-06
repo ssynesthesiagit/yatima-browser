@@ -75,7 +75,8 @@ def main():
     default.mkdir(mode=0o700, exist_ok=True)
     preferences = default / 'Preferences'
     if not preferences.exists():
-        preferences.write_text(json.dumps({'browser': {'theme': {'color_scheme2': 2, 'user_color2': int('ffb7ff00', 16) - 2**32, 'color_variant2': 2}}, 'extensions': {'theme': {'id': 'user_color_theme_id'}}}))
+        # Chromium enum 3 is kVibrant; enum 2 is kNeutral.
+        preferences.write_text(json.dumps({'browser': {'theme': {'color_scheme2': 2, 'user_color2': int('ffb7ff00', 16) - 2**32, 'color_variant2': 3}}, 'extensions': {'theme': {'id': 'user_color_theme_id'}}}))
         preferences.chmod(0o600)
     launcher.parent.mkdir(parents=True, exist_ok=True)
     command = [str(binary), f'--user-data-dir={profile}', '--class=yatima-browser', '--force-dark-mode',

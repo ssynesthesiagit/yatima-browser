@@ -1,6 +1,10 @@
 /* Shared Yatima dark tokens for the BrowserOS Assistant UI and native overlays. */
 .dark {
   color-scheme: dark;
+  position: relative;
+  isolation: isolate;
+  background-color: var(--background);
+  color: var(--foreground);
   --background: #030705;
   --foreground: #e7f5ee;
   --card: #08110d;
@@ -35,4 +39,56 @@
   --sidebar-ring: #4df4d0;
   --accent-orange: #b7ff00;
   --accent-orange-bright: #4df4d0;
+}
+
+/* Keep the Assistant's depth quiet: structure comes from lines and contrast. */
+.dark::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(
+      135deg,
+      transparent 0 72%,
+      rgb(183 255 0 / 0.055) 72% calc(72% + 1px),
+      transparent calc(72% + 1px)
+    ),
+    linear-gradient(
+      90deg,
+      transparent 0 18%,
+      rgb(77 244 208 / 0.055) 18% calc(18% + 1px),
+      transparent calc(18% + 1px)
+    );
+  content: "";
+  pointer-events: none;
+  mask-image: linear-gradient(to bottom, black, transparent 78%);
+}
+
+.dark :where(button, [role="button"]) {
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
+}
+
+.dark :where(button, [role="button"]):hover {
+  border-color: var(--ring);
+}
+
+.dark :where(button, [role="button"]):focus-visible,
+.dark :where(input, textarea, select):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 1px var(--background);
+}
+
+.dark :where(input, textarea, select) {
+  border-color: var(--input);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dark *,
+  .dark *::before,
+  .dark *::after {
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }

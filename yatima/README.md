@@ -54,10 +54,23 @@ version `148.0.7966.97`, SHA-256
 The moving upstream URL may later deliver a newer package; the installer will
 reject it until the pin is reviewed and updated.
 
-The installed native frame uses Chromium's dark generated theme with the
-Yatima lime seed. The optional `theme/manifest.json` describes exact native
-colors, but command-line extension loading did not activate that theme during
-installation. The start page and Assistant use the exact CSS palette above.
+The installer seeds a dark, vibrant Chromium color preference for new profiles.
+The pinned native build did not visibly apply the frame palette through these
+preferences or command-line theme loading. The start page and Assistant use
+the CSS palette above independently.
+
+To activate the exact **Yatima Neon** native toolbar and tab palette, open
+`chrome://extensions` in Yatima Browser, enable **Developer mode**, select
+**Load unpacked**, and choose:
+
+```text
+~/.local/share/yatima-browser/addons/theme
+```
+
+This is a permissionless theme containing color configuration, with no
+JavaScript or host permissions. Confirm the native toolbar has changed before
+treating frame activation as complete. The theme's name is Yatima Neon; the
+application launcher remains Yatima Browser.
 
 The Assistant is extracted from the bundled signed archive into a separate
 unpacked extension; only its stylesheet is overlaid. Its public extension key
