@@ -12,6 +12,9 @@ import subprocess
 import time
 import zipfile
 
+from assistant_onboarding_patch import PatchError, patch_assistant_bundle
+from assistant_draft_patch import patch_assistant_draft
+
 VERSION = '148.0.7966.97'
 PACKAGE_SHA256 = 'bfdda9be19ab0ec69602156a5c8aba3bd163351ca89539ecfda2761596b4dc7b'
 AGENT_ID = 'bflpfmnmnokmjhmgnolecpppdbdophmk'
@@ -22,6 +25,21 @@ def backup(path, backup_root):
         target = backup_root / path.relative_to(Path.home())
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(path, target)
+
+
+def prepare_assistant_bundle(source, agent):
+    manifest_path = agent / 'manifest.json'
+    manifest = json.loads(manifest_path.read_text())
+    if manifest.get('version') != '0.0.117.0' or not manifest.get('key'):
+        raise SystemExit('Unexpected bundled Assistant identity.')
+    try:
+        patch_assistant_bundle(agent / 'background.js', agent / 'app.html', manifest_path)
+        patch_assistant_draft(agent)
+    except PatchError as exc:
+        raise SystemExit(f'Unexpected bundled Assistant onboarding shape: {exc}') from exc
+    shutil.copy2(source / 'assistant_onboarding_bootstrap.mjs', agent / 'yatima-onboarding-bootstrap.js')
+    shutil.copy2(source / 'assistant_local_providers.mjs', agent / 'yatima-local-providers.js')
+    return manifest
 
 
 def main():
@@ -54,9 +72,7 @@ def main():
             if not target.is_relative_to(agent.resolve()):
                 raise SystemExit('Unsafe path in bundled extension.')
         archive.extractall(agent)
-    manifest = json.loads((agent / 'manifest.json').read_text())
-    if manifest.get('version') != '0.0.117.0' or not manifest.get('key'):
-        raise SystemExit('Unexpected bundled Assistant identity.')
+    manifest = prepare_assistant_bundle(source, agent)
     styles = list((agent / 'assets').glob('app-*.css'))
     if len(styles) != 1:
         raise SystemExit('Expected exactly one Assistant application stylesheet.')
@@ -71,6 +87,9 @@ def main():
         backup(path, backups)
     profile = home / '.config/yatima-browser'
     profile.mkdir(parents=True, mode=0o700, exist_ok=True)
+    local_providers = profile / 'local-providers.json'
+    if local_providers.is_file():
+        shutil.copy2(local_providers, agent / 'yatima-local-providers.json')
     default = profile / 'Default'
     default.mkdir(mode=0o700, exist_ok=True)
     preferences = default / 'Preferences'
@@ -80,6 +99,7 @@ def main():
         preferences.chmod(0o600)
     launcher.parent.mkdir(parents=True, exist_ok=True)
     command = [str(binary), f'--user-data-dir={profile}', '--class=yatima-browser', '--force-dark-mode',
+               '--no-first-run', '--restore-last-session',
                '--browseros-cdp-port=43082', '--browseros-proxy-port=43080', '--browseros-server-port=43083',
                '--load-extension=' + ','.join(str(addons / name) for name in ('assistant', 'start-page'))]
     native_launcher = root / 'launch-native'

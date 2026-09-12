@@ -13,10 +13,11 @@ const ChatLayoutContent: FC = () => {
     handleSelectProvider,
     resetConversation,
     messages,
-    isLoading,
   } = useChatSessionContext()
 
-  if (isLoading || !selectedProvider) {
+  // Background agent/provider discovery can become pending again. Keep the
+  // conversation and its local draft mounted while a usable target exists.
+  if (!selectedProvider) {
     return (
       <div className="flex h-screen w-screen items-center justify-center bg-background">
         <div className="h-5 w-5 animate-spin rounded-full border-2 border-muted-foreground border-t-transparent" />
